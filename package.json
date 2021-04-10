@@ -1,0 +1,15 @@
+{
+  "name": "05-clima-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Pedro Avaria <pedro.avaria.contreras@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.14.37",
+    "@types/typescript": "^2.0.0"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "inquirer": "^8.0.0"
+  }
+}
