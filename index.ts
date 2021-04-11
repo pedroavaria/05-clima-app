@@ -1,10 +1,10 @@
+require('dotenv').config
 require('colors')
 import axios from 'axios';
-import * as color from 'colors'
 import { inquirerMenu, leerInput, pausa } from './helpers/inquirer';
 import { Busquedas } from './models/busquedas';
 
-console.log('Hola Mundo'.green);
+
 
 const main = async () => {
 
