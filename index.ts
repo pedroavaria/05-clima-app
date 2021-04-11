@@ -8,6 +8,7 @@ const main = async () => {
 
     let opt: number
     const busqueda = new Busquedas()
+    busqueda.leerDB()
     do {
         opt = await inquirerMenu()
         switch (opt) {
@@ -18,7 +19,7 @@ const main = async () => {
                 if (lugarSeleccionado !== 0) {
                     const infoLugar = lugares.find(lugar => lugar.id === lugarSeleccionado)
                     const {nombre, lng,lat} = infoLugar
-
+                    busqueda.guardarDB(nombre)
                     const clima = await busqueda.climaLugar(lat,lng)
                     
                     if (clima) {
@@ -37,9 +38,12 @@ const main = async () => {
 
                 
                 break;
+            case 2: 
+                busqueda.listarLugares()
+                break;
         }
 
-        await pausa();
+        if (opt !== 0)  await pausa();
     } while (opt !== 0);
 
 

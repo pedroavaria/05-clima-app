@@ -1,7 +1,9 @@
+import fs from 'fs'
 import axios from 'axios';
 class Busquedas {
 
-    historial = ['Tegucigalpa', 'Madrid', 'San Jose']
+    historial:Array<any> = []
+    pathDB = './db/lugares.json'
 
     constructor() {
 
@@ -32,11 +34,11 @@ class Busquedas {
             })
             const resp = await instance.get('/')
             // console.log(resp.data.features);
-            return resp.data.features.map((lugar:any) => ({
-                id:lugar.id,
+            return resp.data.features.map((lugar: any) => ({
+                id: lugar.id,
                 nombre: lugar.place_name,
                 lng: lugar.center[0],
-                lat: lugar.center[1] 
+                lat: lugar.center[1]
             })) // retorna todos los lugares que coincidan
 
         } catch (error) {
@@ -44,16 +46,16 @@ class Busquedas {
         }
     }
 
-    async climaLugar(lat:any,lon:any) {
+    async climaLugar(lat: any, lon: any) {
         try {
 
             const instance = axios.create({
-                baseURL: `https://api.openweathermap.org/data/2.5/weather`, 
-                params: {...this.paramWeather, lat, lon}
+                baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+                params: { ...this.paramWeather, lat, lon }
             })
 
             const result = await instance.get('/')
-            const {weather,main} = result.data
+            const { weather, main } = result.data
             return {
                 desc: weather[0].description,
                 min: main.temp_min,
@@ -67,6 +69,29 @@ class Busquedas {
         return null
 
     }
+
+    guardarDB(lugar = '') {
+        const existe = this.historial.find(l => l == lugar)
+        if (!existe) {
+            this.historial.unshift(lugar)
+            fs.writeFileSync(this.pathDB, JSON.stringify(this.historial))
+        }
+
+    }
+
+    leerDB() {
+        const db:any = fs.readFileSync(this.pathDB)
+        this.historial = JSON.parse(db)
+    }
+
+    listarLugares() {
+        this.historial.forEach((lugar, key) => {
+            const idx = `${key + 1}.`.green
+            console.log(`${idx} ${lugar}`);
+
+        })
+    }
+
 }
 
 export { Busquedas }
