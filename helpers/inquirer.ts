@@ -65,24 +65,24 @@ const leerInput = async (message: string) => {
 }
 
 
-const listadoTareasBorrar = async (tareas: Array<any>) => {
+const Listarlugares = async (lugares: Array<any>) => {
 
-    const choices = tareas.map((tarea, key) => {
+    const choices = lugares.map((lugar, key) => {
         const idx = `${key + 1}.`.green
         return {
-            value: tarea.id,
-            name: `${idx} ${tarea.desc}`
+            value: lugar.id,
+            name: `${idx} ${lugar.nombre}`
         }
     })
     choices.push({
-        value: '0',
+        value: 0,
         name: '0'.green + ' Volver'
     })
     const preguntas = [
         {
             type: 'list',
             name: 'opcion',
-            message: 'Borrar',
+            message: 'Seleccione lugar:',
             choices
         }
     ]
@@ -123,4 +123,4 @@ const checkBox = async (tareas: Array<any>) => {
     return checked
 }
 
-export { inquirerMenu, pausa, leerInput, listadoTareasBorrar, confirmar, checkBox }
+export { inquirerMenu, pausa, leerInput, Listarlugares, confirmar, checkBox }
