@@ -71,8 +71,8 @@ class Busquedas {
     }
 
     guardarDB(lugar = '') {
-        const existe = this.historial.find(l => l == lugar)
-        if (!existe) {
+        if (!this.historial.includes(lugar)) {
+            this.historial = this.historial.slice(0,5)
             this.historial.unshift(lugar)
             fs.writeFileSync(this.pathDB, JSON.stringify(this.historial))
         }
